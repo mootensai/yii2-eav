@@ -6,6 +6,7 @@
 namespace mirocow\eav\handlers;
 
 use yii\db\ActiveRecord;
+use yii\helpers\ArrayHelper;
 
 /**
  * Class MultipleOptionsValueHandler
@@ -28,10 +29,9 @@ class MultipleOptionsValueHandler extends ValueHandler
 						'attributeId' => $this->attributeHandler->attributeModel->getPrimaryKey(),
 				]);
 
-				$values = [];
-				foreach ($models as $model) {
-						$values[] = $model->optionId;
-				}
+				$values = ArrayHelper::getColumn($models, function($element) {
+				    return $element->optionId;
+                });
 
 				return $values;
 		}
@@ -64,30 +64,25 @@ class MultipleOptionsValueHandler extends ValueHandler
 						'attributeId' => $this->attributeHandler->attributeModel->getPrimaryKey(),
 				]);
 
-				$allOptions = [];
-				foreach ($this->attributeHandler->attributeModel->eavOptions as $option) {
-						$allOptions[] = $option->getPrimaryKey();
-				}
+				$allOptions = ArrayHelper::getColumn($this->attributeHandler->attributeModel->eavOptions, function ($element) {
+				    return $element->getPrimaryKey();
+				});
 
 				$query = clone $baseQuery;
-				$query->andWhere("optionId NOT IN (:options)");
-				$valueClass::deleteAll($query->where, [
-						'options' => implode(',', $allOptions),
-				]);
+				$query->andWhere(['NOT IN', 'optionId', $allOptions]);
+				$valueClass::deleteAll($query->where);
 
 				// then we delete unselected options
-				$selectedOptions = $EavModel->attributes[$attribute];
+				$selectedOptions = ArrayHelper::getValue($EavModel->attributes, $attribute);
 				if (!is_array($selectedOptions)) {
 						$selectedOptions = [];
 				}
 				$deleteOptions = array_diff($allOptions, $selectedOptions);
 
 				$query = clone $baseQuery;
-				$query->andWhere("optionId IN (:options)");
+				$query->andWhere(['IN', 'optionId', $deleteOptions]);
 
-				$valueClass::deleteAll($query->where, [
-						'options' => implode(',', $deleteOptions),
-				]);
+				$valueClass::deleteAll($query->where);
 
 				// third we insert missing options
 				foreach ($selectedOptions as $id) {

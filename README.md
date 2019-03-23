@@ -26,12 +26,12 @@ EAV Dynamic Attributes for Yii2
 ## Add github repository
 
 ```json
-		"repositories": [
-				{
-						"type": "git",
-						"url": "https://github.com/mirocow/yii2-eav.git"
-				}
-		]
+"repositories": [
+  {
+    "type": "git",
+    "url": "https://github.com/mirocow/yii2-eav.git"
+  }
+]
 ```
 and then
 
@@ -54,23 +54,23 @@ php ./yii migrate/up -p=@vendor/mirocow/yii2-eav/src/migrations
 and then add messages settings
 
 ``` php
-		'i18n' => [
-				'translations' => [
-						'app*' => [
-								'class' => 'yii\i18n\PhpMessageSource',
-								//'basePath' => '@app/messages',
-								//'sourceLanguage' => 'en-US',
-								'fileMap' => [
-										'app'       => 'app.php',
-										'app/error' => 'error.php',
-								],
-						],
-						'eav' => [
-								'class' => 'yii\i18n\PhpMessageSource',
-								'basePath' => '@mirocow/eav/messages',
-						],
-				],
-		]
+    'i18n' => [
+        'translations' => [
+            'app*' => [
+                'class' => 'yii\i18n\PhpMessageSource',
+                //'basePath' => '@app/messages',
+                //'sourceLanguage' => 'en-US',
+                'fileMap' => [
+                    'app'       => 'app.php',
+                    'app/error' => 'error.php',
+                ],
+            ],
+            'eav' => [
+                'class' => 'yii\i18n\PhpMessageSource',
+                'basePath' => '@mirocow/eav/messages',
+            ],
+        ],
+    ]
 ```
 
 ## Use
@@ -82,48 +82,38 @@ and then add messages settings
 ``` php
 class Product extends \yii\db\ActiveRecord
 {
-
-		/**
-		 *
-		 *
-		 */
-		public function rules()
-		{
-				return [
-						[['name'], 'string', 'max' => 255], // Product field
-						[['c1'], 'required'], // Attribute field
-						[['c1'], 'string', 'max' => 255], // Attribute field
-				];
-		}
-
-		/**
-		 * create_time, update_time to now()
-		 * crate_user_id, update_user_id to current login user id
-		 */
-		public function behaviors()
-		{
-				return [
-						'eav' => [
-								'class' => \mirocow\eav\EavBehavior::className(),
-								// это модель для таблицы object_attribute_value
-								'valueClass' => \mirocow\eav\models\EavAttributeValue::className(),
-						]
-				];
-		}
-
-		/**
-		 * @return \yii\db\ActiveQuery
-		 */
-		public function getEavAttributes()
-		{
-				return \mirocow\eav\models\EavAttribute::find()
-					->joinWith('entity')
-					->where([
-						'categoryId' => $this->categories[0]->id,
-						'entityModel' => $this::className()
-				]);
-		}
-
+    public function rules()
+    {
+        return [
+            [['name'], 'string', 'max' => 255], // Product field
+            [['c1'], 'required'], // Attribute field
+            [['c1'], 'string', 'max' => 255], // Attribute field
+        ];
+    }
+    
+    public function behaviors()
+    {
+        return [
+            'eav' => [
+                'class' => \mirocow\eav\EavBehavior::className(),
+                // это модель для таблицы object_attribute_value
+                'valueClass' => \mirocow\eav\models\EavAttributeValue::className(),
+            ]
+        ];
+    }
+    
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getEavAttributes()
+    {
+        return \mirocow\eav\models\EavAttribute::find()
+            ->joinWith('entity')
+            ->where([
+                'categoryId' => $this->categories[0]->id,
+                'entityModel' => $this::className()
+        ]);
+    }
 }
 ```
 
@@ -132,49 +122,40 @@ class Product extends \yii\db\ActiveRecord
 ``` php
 class Product extends \yii\db\ActiveRecord
 {
-
-		/**
-		 *
-		 *
-		 */
-		public function rules()
-		{
-				return [
-						[['name'], 'string', 'max' => 255], // Product field
-						[['c1'], 'required'], // Attribute field
-						[['c1'], 'string', 'max' => 255], // Attribute field
-				];
-		}
-
-		/**
-		 * create_time, update_time to now()
-		 * crate_user_id, update_user_id to current login user id
-		 */
-		public function behaviors()
-		{
-				return [
-						'eav' => [
-								'class' => \mirocow\eav\EavBehavior::className(),
-								// это модель для таблицы object_attribute_value
-								'valueClass' => \mirocow\eav\models\EavAttributeValue::className(),
-						]
-				];
-		}
-
-		/**
-		 * @return \yii\db\ActiveQuery
-		 */
-		public function getEavAttributes($attributes = [])
-		{
-				return \mirocow\eav\models\EavAttribute::find()
-					->joinWith('entity')
-					->where([
-						//'categoryId' => $this->categories[0]->id,
-						'entityModel' => $this::className()
-				])
-				->orderBy(['order' => SORT_ASC]);
-		}
-
+  
+    public function rules()
+    {
+        return [
+            [['name'], 'string', 'max' => 255], // Product field
+            [['c1'], 'required'], // Attribute field
+            [['c1'], 'string', 'max' => 255], // Attribute field
+        ];
+    }
+    
+    public function behaviors()
+    {
+        return [
+            'eav' => [
+                'class' => \mirocow\eav\EavBehavior::className(),
+                // это модель для таблицы object_attribute_value
+                'valueClass' => \mirocow\eav\models\EavAttributeValue::className(),
+            ]
+        ];
+    }
+    
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getEavAttributes($attributes = [])
+    {
+        return \mirocow\eav\models\EavAttribute::find()
+            ->joinWith('entity')
+            ->where([
+                //'categoryId' => $this->categories[0]->id,
+                'entityModel' => $this::className()
+            ])
+        ->orderBy(['order' => SORT_ASC]);
+    }
 }
 ```
 
@@ -187,39 +168,39 @@ Insert this code for create widget or load all EAV inputs fields for model
 fo load selected field
 
 ``` php
-		<?=$form->field($model,'test5', ['class' => '\mirocow\eav\widgets\ActiveField'])->eavInput(); ?>
+<?=$form->field($model,'test5', ['class' => '\mirocow\eav\widgets\ActiveField'])->eavInput(); ?>
 ```
 or for load all fields
 
 #### Simple
 
 ``` php
-		<?php
-		foreach($model->getEavAttributes()->all() as $attr){
-				echo $form->field($model, $attr->name, ['class' => '\mirocow\eav\widgets\ActiveField'])->eavInput();
-		}
-		?>
+<?php
+foreach($model->getEavAttributes()->all() as $attr) {
+    echo $form->field($model, $attr->name, ['class' => '\mirocow\eav\widgets\ActiveField'])->eavInput();
+}
+?>
 ```
 
 or add sorted
 
 
 ``` php
-		<?php
-		foreach($model->getEavAttributes()->orderBy(['order' => SORT_ASC])->all() as $attr){
-				echo $form->field($model, $attr->name, ['class' => '\mirocow\eav\widgets\ActiveField'])->eavInput();
-		}
-		?>
+<?php
+foreach($model->getEavAttributes()->orderBy(['order' => SORT_ASC])->all() as $attr) {
+    echo $form->field($model, $attr->name, ['class' => '\mirocow\eav\widgets\ActiveField'])->eavInput();
+}
+?>
 ```
 
 ### Advanced
 
 ``` php
-		<?php
-		foreach($model->getEavAttributes(['entityId' => 8, 'typeId' => 3])->all() as $attr){
-				echo $form->field($model, $attr->name, ['class' => '\mirocow\eav\widgets\ActiveField'])->eavInput();
-		}
-		?>
+<?php
+foreach($model->getEavAttributes(['entityId' => 8, 'typeId' => 3])->all() as $attr) {
+    echo $form->field($model, $attr->name, ['class' => '\mirocow\eav\widgets\ActiveField'])->eavInput();
+}
+?>
 ```
 
 ### Partial template
@@ -229,9 +210,9 @@ or add sorted
 Encode
 
 <?php
-	foreach($model->getEavAttributes()->all() as $attr){
-		print_r($model[$attr->name]['value']);
-	}
+    foreach($model->getEavAttributes()->all() as $attr) {
+        print_r($model[$attr->name]['value']);
+    }
 ?>
 </p>
 
@@ -239,9 +220,9 @@ Encode
 String
 
 <?php
-	foreach($model->getEavAttributes()->all() as $attr){
-		echo $model[$attr->name];
-	}
+    foreach($model->getEavAttributes()->all() as $attr){
+        echo $model[$attr->name];
+    }
 ?>
 ```
 
@@ -250,25 +231,25 @@ String
 ```php
 $attr = new mirocow\eav\models\EavAttribute();
 $attr->attributes = [
-				'entityId' => 1, // Category ID
-				'typeId' => 1, // ID type from eav_attribute_type
-				'name' => 'packing',  // service name field
-				'label' => 'Packing',         // label text for form
-				'defaultValue' => '10 kg',  // default value
-				'entityModel' => Product::className(), // work model
-				'required' => false           // add rule "required field"
-		];
+    'entityId' => 1,                        // Category ID
+    'typeId' => 1,                          // ID type from eav_attribute_type
+    'name' => 'packing',                    // service name field
+    'label' => 'Packing',                   // label text for form
+    'defaultValue' => '10 kg',              // default value
+    'entityModel' => Product::className(),  // work model
+    'required' => false                     // add rule "required field"
+];
 $attr->save();
 
 $attr->attributes = [
-				'entityId' => 1, // Category ID
-				'typeId' => 1, // ID type from eav_attribute_type
-				'name' => 'color',  // service name field
-				'label' => 'Color',         // label text for form
-				'defaultValue' => 'white',  // default value
-				'entityModel' => Product::className(), // work model
-				'required' => false           // add rule "required field"
-		];
+    'entityId' => 1,                        // Category ID
+    'typeId' => 1,                          // ID type from eav_attribute_type
+    'name' => 'color',                      // service name field
+    'label' => 'Color',                     // label text for form
+    'defaultValue' => 'white',              // default value
+    'entityModel' => Product::className(),  // work model
+    'required' => false                     // add rule "required field"
+];
 $attr->save();
 ```
 
@@ -287,10 +268,10 @@ $model->save();
 In main config file:
 ```php
 $modules = [
-		...,
-		'eav' => [
-				'class' => 'mirocow\eav\Module',
-		],
+        ...,
+        'eav' => [
+            'class' => 'mirocow\eav\Module',
+        ],
 ];
 ```
 
@@ -302,9 +283,9 @@ $modules = [
 
 ``` php
 <?= \mirocow\eav\admin\widgets\Fields::widget([
-		'model' => $model,
-		'categoryId' => $model->id,
-		'entityName' => 'Продукт',
-		'entityModel' => 'app\models\Product',
+    'model' => $model,
+    'categoryId' => $model->id,
+    'entityName' => 'Продукт',
+    'entityModel' => 'app\models\Product',
 ])?>
 ```

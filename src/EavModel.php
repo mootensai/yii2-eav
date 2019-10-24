@@ -56,7 +56,7 @@ class EavModel extends BaseEavModel
 				 * Rise after form submit
 				 */
 				if($model->attribute <> 'eav'){
-						$params = ['name' => $model->attribute];
+						$params = [EavAttribute::tableName() . '.name' => $model->attribute];
 				}
 
 				$attributes = $model

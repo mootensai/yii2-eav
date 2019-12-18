@@ -7,6 +7,8 @@ use yii\db\Migration;
  */
 class m160501_124615_create_table_eav_attribute_rules extends Migration
 {
+    const TABLE_NAME = '{{%eav_attribute_rules}}';
+
     /**
      * @inheritdoc
      */
@@ -17,7 +19,7 @@ class m160501_124615_create_table_eav_attribute_rules extends Migration
             : null;
 
         $this->createTable(
-            '{{%eav_attribute_rules}}',
+            self::TABLE_NAME,
             [
                 'id' => $this->primaryKey(),
                 'attributeId' => $this->integer(11)->defaultValue(0),
@@ -28,12 +30,12 @@ class m160501_124615_create_table_eav_attribute_rules extends Migration
 
         $this->addForeignKey(
             'FK_Rules_attributeId',
-            '{{%eav_attribute_rules}}',
+            self::TABLE_NAME,
             'attributeId',
             '{{%eav_attribute}}',
             'id',
-            "CASCADE",
-            "NO ACTION"
+            'CASCADE',
+            'NO ACTION'
         );
     }
 
@@ -42,6 +44,7 @@ class m160501_124615_create_table_eav_attribute_rules extends Migration
      */
     public function safeDown()
     {
+        $this->dropForeignKey('FK_Rules_attributeId', self::TABLE_NAME);
         $this->dropTable('eav_attribute_rules');
     }
 }

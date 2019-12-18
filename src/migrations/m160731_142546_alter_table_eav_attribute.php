@@ -11,9 +11,6 @@ class m160731_142546_alter_table_eav_attribute extends Migration
 
     public function safeDown()
     {
-        echo "m160731_142546_alter_table_eav_attribute cannot be reverted.\n";
-
-        return false;
+        // Just pass. It's was already nullable before this migration
     }
-
 }

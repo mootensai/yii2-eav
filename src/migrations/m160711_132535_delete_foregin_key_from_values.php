@@ -4,7 +4,7 @@ use yii\db\Migration;
 
 class m160711_132535_delete_foregin_key_from_values extends Migration
 {
-    public function up()
+    public function safeUp()
     {
         $this->dropForeignKey(
             'FK_Value_optionId',
@@ -27,7 +27,7 @@ class m160711_132535_delete_foregin_key_from_values extends Migration
         );
     }
 
-    public function down()
+    public function safeDown()
     {
         $this->addForeignKey(
             'FK_Value_optionId',

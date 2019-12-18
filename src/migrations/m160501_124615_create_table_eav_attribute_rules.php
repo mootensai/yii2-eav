@@ -10,7 +10,7 @@ class m160501_124615_create_table_eav_attribute_rules extends Migration
     /**
      * @inheritdoc
      */
-    public function up()
+    public function safeUp()
     {
         $options = $this->db->driverName == 'mysql'
             ? 'CHARACTER SET utf8 COLLATE utf8_general_ci ENGINE=InnoDB'
@@ -40,7 +40,7 @@ class m160501_124615_create_table_eav_attribute_rules extends Migration
     /**
      * @inheritdoc
      */
-    public function down()
+    public function safeDown()
     {
         $this->dropTable('eav_attribute_rules');
     }

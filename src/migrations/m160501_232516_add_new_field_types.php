@@ -5,7 +5,7 @@ use yii\db\Migration;
 
 class m160501_232516_add_new_field_types extends Migration
 {
-    public function up()
+    public function safeUp()
     {
         $this->insert(
             '{{%eav_attribute_type}}',
@@ -17,7 +17,7 @@ class m160501_232516_add_new_field_types extends Migration
         );
     }
 
-    public function down()
+    public function safeDown()
     {
         echo "m160501_232516_add_new_field_types cannot be reverted.\n";
 

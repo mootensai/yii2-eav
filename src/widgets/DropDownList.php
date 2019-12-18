@@ -5,17 +5,16 @@
 
 namespace mirocow\eav\widgets;
 
-use mirocow\eav\widgets\AttributeHandler;
 use Yii;
 use yii\helpers\ArrayHelper;
 
 class DropDownList extends AttributeHandler
 {
-		const VALUE_HANDLER_CLASS = '\mirocow\eav\handlers\OptionValueHandler';
+    const VALUE_HANDLER_CLASS = '\mirocow\eav\handlers\OptionValueHandler';
 
-		static $order = 24;
+    static $order = 24;
 
-		static $fieldView = <<<TEMPLATE
+    static $fieldView = <<<TEMPLATE
 		<select>
 
 			<% if (rf.get(Formbuilder.names.INCLUDE_BLANK)) { %>
@@ -34,7 +33,7 @@ class DropDownList extends AttributeHandler
 		</select>
 TEMPLATE;
 
-		static $fieldSettings = <<<TEMPLATE
+    static $fieldSettings = <<<TEMPLATE
 		<%= Formbuilder.templates['edit/field_options']() %>
 		<%= Formbuilder.templates['edit/options']({
 				includeBlank: true,
@@ -43,11 +42,11 @@ TEMPLATE;
 		}) %>
 TEMPLATE;
 
-		static $fieldButton = <<<TEMPLATE
+    static $fieldButton = <<<TEMPLATE
 		<span class="symbol"><span class="fa fa-caret-down"></span></span> <%= Formbuilder.lang('Dropdown') %>
 TEMPLATE;
 
-		static $defaultAttributes = <<<TEMPLATE
+    static $defaultAttributes = <<<TEMPLATE
 		function (attrs) {
 						attrs.field_options.options = [
 								{
@@ -60,17 +59,18 @@ TEMPLATE;
 				}
 TEMPLATE;
 
-		public function run()
-		{
-				$attributeModel = $this->attributeModel;
-				$options = $attributeModel->getEavOptions()->asArray()->all();
+    public function run()
+    {
+        $attributeModel = $this->attributeModel;
+        $options = $attributeModel->getEavOptions()->asArray()->all();
 
-				return $this->owner->activeForm->field(
-						$this->owner,
-						$this->getAttributeName(),
-						['template' => "{input}\n{hint}\n{error}"])
-						->dropDownList(
-								ArrayHelper::map($options, 'id', 'value')
-						);
-		}
+        return $this->owner->activeForm->field(
+            $this->owner,
+            $this->getAttributeName(),
+            ['template' => "{input}\n{hint}\n{error}"]
+        )
+            ->dropDownList(
+                ArrayHelper::map($options, 'id', 'value')
+            );
+    }
 }

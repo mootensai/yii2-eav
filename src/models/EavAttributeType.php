@@ -11,7 +11,6 @@ use Yii;
  * @property string $name
  * @property string $handlerClass
  * @property integer $storeType
- *
  * @property EavAttribute[] $eavAttributes
  */
 class EavAttributeType extends \yii\db\ActiveRecord
@@ -32,7 +31,12 @@ class EavAttributeType extends \yii\db\ActiveRecord
         return [
             [['storeType'], 'integer'],
             [['name', 'handlerClass'], 'string', 'max' => 255],
-            ['name', 'match', 'pattern' => '/(^|.*\])([\w\.]+)(\[.*|$)/', 'message' => Yii::t('eav','Type name must contain latin word characters only.')],
+            [
+                'name',
+                'match',
+                'pattern' => '/(^|.*\])([\w\.]+)(\[.*|$)/',
+                'message' => Yii::t('eav', 'Type name must contain latin word characters only.'),
+            ],
         ];
     }
 
@@ -61,14 +65,19 @@ class EavAttributeType extends \yii\db\ActiveRecord
     public function getFormBuilder()
     {
         $class = $this->handlerClass;
+
         return [
             'order' => isset($class::$order) ? $class::$order : 0,
             'view' => isset($class::$fieldView) ? $class::$fieldView : Yii::t('eav', 'Template view'),
             'edit' => isset($class::$fieldSettings) ? $class::$fieldSettings : Yii::t('eav', 'Template settings'),
             'addButton' => isset($class::$fieldButton) ? $class::$fieldButton : Yii::t('eav', 'Template field button'),
-            'defaultAttributes' => isset($class::$defaultAttributes) ? $class::$defaultAttributes : Yii::t('eav', 'Template default attributes'),
+            'defaultAttributes' => isset($class::$defaultAttributes)
+                ? $class::$defaultAttributes
+                : Yii::t(
+                    'eav',
+                    'Template default attributes'
+                ),
         ];
-
     }
 
 }

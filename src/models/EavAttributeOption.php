@@ -13,7 +13,6 @@ use yii\helpers\ArrayHelper;
  * @property integer $order
  * @property string $value
  * @property string $defaultOptionId
- *
  * @property EavAttribute[] $eavAttributes
  * @property EavAttribute $attribute
  * @property EavAttributeValue[] $eavAttributeValues
@@ -36,7 +35,13 @@ class EavAttributeOption extends \yii\db\ActiveRecord
         return [
             [['attributeId', 'order', 'defaultOptionId'], 'integer'],
             [['value'], 'string', 'max' => 255],
-            [['attributeId'], 'exist', 'skipOnError' => true, 'targetClass' => EavAttribute::className(), 'targetAttribute' => ['attributeId' => 'id']],
+            [
+                ['attributeId'],
+                'exist',
+                'skipOnError' => true,
+                'targetClass' => EavAttribute::className(),
+                'targetAttribute' => ['attributeId' => 'id'],
+            ],
         ];
     }
 
@@ -81,7 +86,6 @@ class EavAttributeOption extends \yii\db\ActiveRecord
 
     public function getListAttributes()
     {
-
         $models = EavAttribute::find()->select(['id', 'label'])->asArray()->all();
 
         return ArrayHelper::map($models, 'id', 'label');

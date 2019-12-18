@@ -14,18 +14,19 @@ use yii\db\ActiveRecord;
 
 /**
  * Class AttributeHandler
+ *
  * @package mirocow\eav
  */
 class AttributeHandler extends Widget
 {
     const VALUE_HANDLER_CLASS = '\mirocow\eav\handlers\RawValueHandler';
-    
+
     /** @var EavModel */
     public $owner;
-    
+
     /** @var ValueHandler */
     public $valueHandler;
-    
+
     /** @var ActiveRecord */
     public $attributeModel;
 
@@ -45,11 +46,13 @@ class AttributeHandler extends Widget
             throw new InvalidParamException('Unknown handler class: ' . $class);
         }
 
-        $handler = Yii::createObject([
-            'class' => $class,
-            'owner' => $owner,
-            'attributeModel' => $attributeModel
-        ]);
+        $handler = Yii::createObject(
+            [
+                'class' => $class,
+                'owner' => $owner,
+                'attributeModel' => $attributeModel,
+            ]
+        );
         $handler->init();
 
         return $handler;
@@ -60,10 +63,12 @@ class AttributeHandler extends Widget
      */
     public function init()
     {
-        $this->valueHandler = Yii::createObject([
-            'class' => static::VALUE_HANDLER_CLASS,
-            'attributeHandler' => $this,
-        ]);
+        $this->valueHandler = Yii::createObject(
+            [
+                'class' => static::VALUE_HANDLER_CLASS,
+                'attributeHandler' => $this,
+            ]
+        );
     }
 
     /**
@@ -85,6 +90,7 @@ class AttributeHandler extends Widget
         foreach ($this->attributeModel->eavOptions as $option) {
             $result[] = $option->getPrimaryKey();
         }
+
         return $result;
     }
 }

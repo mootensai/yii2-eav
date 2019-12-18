@@ -4,72 +4,73 @@
  */
 
 namespace mirocow\eav\handlers;
+
 use yii\helpers\Json;
 
 /**
  * Class RawValueHandler
+ *
  * @package mirocow\eav
  */
 class ArrayValueHandler extends RawValueHandler
 {
-		/**
-		 * @inheritdoc
-		 */
-		public function load()
-		{
-				$value = parent::load();
-				return json_decode($value, true);
-		}
+    /**
+     * @inheritdoc
+     */
+    public function load()
+    {
+        $value = parent::load();
 
-		/**
-		 * @inheritdoc
-		 */
-		public function defaultValue()
-		{
-				$type = $this->attributeHandler->attributeModel->eavType;
+        return json_decode($value, true);
+    }
 
-				return false;
-		}
+    /**
+     * @inheritdoc
+     */
+    public function defaultValue()
+    {
+        $type = $this->attributeHandler->attributeModel->eavType;
 
-		/**
-		 * @inheritdoc
-		 */
-		public function save()
-		{
-				$EavModel = $this->attributeHandler->owner;
-				$valueModel = $this->getValueModel();
-				$attribute = $this->attributeHandler->getAttributeName();
+        return false;
+    }
 
-				if (isset($EavModel->attributes[$attribute])) {
+    /**
+     * @inheritdoc
+     */
+    public function save()
+    {
+        $EavModel = $this->attributeHandler->owner;
+        $valueModel = $this->getValueModel();
+        $attribute = $this->attributeHandler->getAttributeName();
 
-						$value = $EavModel->attributes[$attribute];
-						$valueModel->value = json_encode($value);
+        if (isset($EavModel->attributes[$attribute])) {
+            $value = $EavModel->attributes[$attribute];
+            $valueModel->value = json_encode($value);
 
-						if (!$valueModel->save()) {
-								throw new \Exception("Can't save value model");
-						}
+            if (!$valueModel->save()) {
+                throw new \Exception("Can't save value model");
+            }
+        }
+    }
 
-				}
-		}
+    public function getTextValue()
+    {
+        return json_encode(parent::getTextValue());
+    }
 
-		public function getTextValue()
-		{
-				return json_encode(parent::getTextValue());
-		}
+    public function getArrayValue()
+    {
+        return json_decode(parent::getTextValue());
+    }
 
-		public function getArrayValue()
-		{
-				return json_decode(parent::getTextValue());
-		}
+    public function addRules()
+    {
+        $model = &$this->attributeHandler->owner;
+        $attribute = &$this->attributeHandler->attributeModel;
+        $attribute_name = $this->attributeHandler->getAttributeName();
 
-		public function addRules()
-		{
-				$model = &$this->attributeHandler->owner;
-				$attribute = &$this->attributeHandler->attributeModel;
-				$attribute_name = $this->attributeHandler->getAttributeName();
-
-				if ($attribute->eavType->storeType == ValueHandler::STORE_TYPE_ARRAY) {
-						$model->addRule($attribute_name, 'string');
-				}
-		}
+        if ($attribute->eavType->storeType == ValueHandler::STORE_TYPE_ARRAY) {
+            $model->addRule($attribute_name, 'string');
+        }
+    }
 }

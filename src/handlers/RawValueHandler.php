@@ -7,61 +7,59 @@ namespace mirocow\eav\handlers;
 
 /**
  * Class RawValueHandler
+ *
  * @package mirocow\eav
  */
 class RawValueHandler extends ValueHandler
 {
-		/**
-		 * @inheritdoc
-		 */
-		public function load()
-		{
-				$valueModel = $this->getValueModel();
-				return $valueModel->value;
-		}
+    /**
+     * @inheritdoc
+     */
+    public function load()
+    {
+        $valueModel = $this->getValueModel();
 
-		/**
-		 * @inheritdoc
-		 */
-		public function defaultValue()
-		{
-				return null;
-		}
+        return $valueModel->value;
+    }
 
-		/**
-		 * @inheritdoc
-		 */
-		public function save()
-		{
-				$EavModel = $this->attributeHandler->owner;
-				$valueModel = $this->getValueModel();
-				$attribute = $this->attributeHandler->getAttributeName();
+    /**
+     * @inheritdoc
+     */
+    public function defaultValue()
+    {
+        return null;
+    }
 
-				if (isset($EavModel->attributes[$attribute])) {
+    /**
+     * @inheritdoc
+     */
+    public function save()
+    {
+        $EavModel = $this->attributeHandler->owner;
+        $valueModel = $this->getValueModel();
+        $attribute = $this->attributeHandler->getAttributeName();
 
-						$valueModel->value = $EavModel->attributes[$attribute];
-						if (!$valueModel->save()) {
-								throw new \Exception("Can't save value model");
-						}
+        if (isset($EavModel->attributes[$attribute])) {
+            $valueModel->value = $EavModel->attributes[$attribute];
+            if (!$valueModel->save()) {
+                throw new \Exception("Can't save value model");
+            }
+        }
+    }
 
-				}
-		}
+    public function getTextValue()
+    {
+        return $this->getValueModel()->value;
+    }
 
-		public function getTextValue()
-		{
-				return $this->getValueModel()->value;
-		}
+    public function addRules()
+    {
+        $model = &$this->attributeHandler->owner;
+        $attribute = &$this->attributeHandler->attributeModel;
+        $attribute_name = $this->attributeHandler->getAttributeName();
 
-		public function addRules()
-		{
-
-				$model = &$this->attributeHandler->owner;
-				$attribute = &$this->attributeHandler->attributeModel;
-				$attribute_name = $this->attributeHandler->getAttributeName();
-
-				if ($attribute->eavType->storeType == ValueHandler::STORE_TYPE_RAW) {
-						$model->addRule($attribute_name, 'default', ['value' => $attribute->defaultValue]);
-				}
-
-		}
+        if ($attribute->eavType->storeType == ValueHandler::STORE_TYPE_RAW) {
+            $model->addRule($attribute_name, 'default', ['value' => $attribute->defaultValue]);
+        }
+    }
 }

@@ -35,7 +35,6 @@ class EavAttributeOptionSearch extends EavAttributeOption
      * Creates data provider instance with search query applied
      *
      * @param array $params
-     *
      * @return ActiveDataProvider
      */
     public function search($params)
@@ -44,9 +43,11 @@ class EavAttributeOptionSearch extends EavAttributeOption
 
         // add conditions that should always apply here
 
-        $dataProvider = new ActiveDataProvider([
-            'query' => $query,
-        ]);
+        $dataProvider = new ActiveDataProvider(
+            [
+                'query' => $query,
+            ]
+        );
 
         $this->load($params);
 
@@ -57,10 +58,12 @@ class EavAttributeOptionSearch extends EavAttributeOption
         }
 
         // grid filtering conditions
-        $query->andFilterWhere([
-            'id' => $this->id,
-            'attributeId' => $this->attributeId,
-        ]);
+        $query->andFilterWhere(
+            [
+                'id' => $this->id,
+                'attributeId' => $this->attributeId,
+            ]
+        );
 
         $query->andFilterWhere(['like', 'value', $this->value]);
 

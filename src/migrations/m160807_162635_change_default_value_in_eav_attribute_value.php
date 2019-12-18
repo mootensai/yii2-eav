@@ -11,5 +11,6 @@ class m160807_162635_change_default_value_in_eav_attribute_value extends Migrati
 
     public function safeDown()
     {
+        $this->alterColumn('{{%eav_attribute_value}}', 'value', $this->string(255)->defaultValue('NULL'));
     }
 }

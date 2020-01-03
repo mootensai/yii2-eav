@@ -10,7 +10,6 @@ use Yii;
  * @property integer $id
  * @property string $entityName
  * @property string $entityModel
- *
  * @property EavAttribute[] $eavAttributes
  */
 class EavEntity extends \yii\db\ActiveRecord

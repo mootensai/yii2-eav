@@ -35,7 +35,6 @@ class EavEntitySearch extends EavEntity
      * Creates data provider instance with search query applied
      *
      * @param array $params
-     *
      * @return ActiveDataProvider
      */
     public function search($params)
@@ -44,9 +43,11 @@ class EavEntitySearch extends EavEntity
 
         // add conditions that should always apply here
 
-        $dataProvider = new ActiveDataProvider([
-            'query' => $query,
-        ]);
+        $dataProvider = new ActiveDataProvider(
+            [
+                'query' => $query,
+            ]
+        );
 
         $this->load($params);
 
@@ -57,10 +58,12 @@ class EavEntitySearch extends EavEntity
         }
 
         // grid filtering conditions
-        $query->andFilterWhere([
-            'id' => $this->id,
-            'categoryId' => $this->categoryId,
-        ]);
+        $query->andFilterWhere(
+            [
+                'id' => $this->id,
+                'categoryId' => $this->categoryId,
+            ]
+        );
 
         $query->andFilterWhere(['=', 'entityName', $this->entityName])
             ->andFilterWhere(['=', 'entityModel', $this->entityModel]);

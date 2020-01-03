@@ -4,17 +4,15 @@ use yii\db\Migration;
 
 class m160501_234949_remove_column_required_from_attribute extends Migration
 {
-    public function up()
+    const TABLE_NAME = '{{%eav_attribute}}';
+
+    public function safeUp()
     {
-
-        $this->dropColumn('{{%eav_attribute}}', 'required');
-
+        $this->dropColumn(self::TABLE_NAME, 'required');
     }
 
-    public function down()
+    public function safeDown()
     {
-        echo "m160501_234949_remove_column_required_from_attribute cannot be reverted.\n";
-
-        return false;
+        $this->addColumn(self::TABLE_NAME, 'required', $this->smallInteger(1)->defaultValue(0));
     }
 }

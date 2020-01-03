@@ -13,7 +13,6 @@ use Yii;
  * @property integer $attributeId
  * @property string $value
  * @property integer $optionId
- *
  * @property EavAttribute $attribute
  * @property Eav $entity
  * @property EavAttributeOption $option

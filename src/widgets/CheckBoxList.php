@@ -5,17 +5,16 @@
 
 namespace mirocow\eav\widgets;
 
-use mirocow\eav\widgets\AttributeHandler;
 use Yii;
 use yii\helpers\ArrayHelper;
 
 class CheckBoxList extends AttributeHandler
 {
-		const VALUE_HANDLER_CLASS = '\mirocow\eav\handlers\MultipleOptionsValueHandler';
+    const VALUE_HANDLER_CLASS = '\mirocow\eav\handlers\MultipleOptionsValueHandler';
 
-		static $order = 10;
+    static $order = 10;
 
-		static $fieldView = <<<TEMPLATE
+    static $fieldView = <<<TEMPLATE
 		<% for (i in (rf.get(Formbuilder.names.OPTIONS) || [])) { %>
 		<div>
 		<label class='fb-option'>
@@ -36,7 +35,7 @@ class CheckBoxList extends AttributeHandler
 		<% } %>
 TEMPLATE;
 
-		static $fieldSettings = <<<TEMPLATE
+    static $fieldSettings = <<<TEMPLATE
 		<%= Formbuilder.templates['edit/field_options']() %>
 		<%= Formbuilder.templates['edit/options']({
 			showCheckBox: true,
@@ -44,11 +43,11 @@ TEMPLATE;
 		}) %>
 TEMPLATE;
 
-		static $fieldButton = <<<TEMPLATE
+    static $fieldButton = <<<TEMPLATE
 		<span class="symbol"><span class="fa fa-square-o"></span></span> <%= Formbuilder.lang('Checkboxes') %>
 TEMPLATE;
 
-		static $defaultAttributes = <<<TEMPLATE
+    static $defaultAttributes = <<<TEMPLATE
 		function (attrs) {
 						attrs.field_options.options = [
 								{
@@ -60,16 +59,17 @@ TEMPLATE;
 				}
 TEMPLATE;
 
-		public function run()
-		{
-				$options = $this->attributeModel->getEavOptions()->asArray()->all();
+    public function run()
+    {
+        $options = $this->attributeModel->getEavOptions()->asArray()->all();
 
-				return $this->owner->activeForm->field(
-						$this->owner,
-						$this->getAttributeName(),
-						['template' => "{input}\n{hint}\n{error}"])
-						->checkboxList(
-								ArrayHelper::map($options, 'id', 'value')
-						);
-		}
+        return $this->owner->activeForm->field(
+            $this->owner,
+            $this->getAttributeName(),
+            ['template' => "{input}\n{hint}\n{error}"]
+        )
+            ->checkboxList(
+                ArrayHelper::map($options, 'id', 'value')
+            );
+    }
 }

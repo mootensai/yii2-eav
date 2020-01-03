@@ -1,7 +1,6 @@
 .fb-button {
     display: inline-block;
     margin: 0;
-    /*padding: .563rem .844rem;*/
     border: 0 none;
     background: #16a085;
     color: #fff;
@@ -11,7 +10,6 @@
     line-height: 1.5;
     cursor: pointer;
     border-radius: .125rem;
-    /*border: thin solid #19b394;*/
     border-bottom: 2px solid #16a085;
     border: none;
     padding: 3px 6px;
@@ -109,26 +107,8 @@
     font-size: 0
 }
 
-.fb-add-field-types a {
-    /*
-    font-size: 13px;
-    display: inline-block;
-    width: 48.5%;
-    background-color: #1abc9c;
-    margin-bottom: 9px;
-    box-sizing: border-box
-    */
-}
-
 .fb-add-field-types a:nth-child(odd) {
     margin-right: 3%
-}
-
-.fb-add-field-types a .symbol {
-    /*
-    opacity: .6;
-    margin: 0 .25em 0 -1em
-    */
 }
 
 .fb-response-fields {
@@ -182,13 +162,6 @@
     right: 5px;
     z-index: 3
 }
-/*
-.fb-field-wrapper .actions-wrapper a {
-    display: inline-block;
-    background-color: #ccc;
-    padding: 2px 8px
-}
-*/
 
 .edit-response-field input, .edit-response-field textarea, .edit-response-field select {
     border: thin solid #ddd;
@@ -206,16 +179,6 @@
 
 .edit-response-field select {
     font-size: 14px
-}
-
-.fb-field-wrapper .actions-wrapper a.js-duplicate, .fb-edit-field-wrapper .js-add-option {
-    /*background-color: #2ecc71;
-    border: none*/
-}
-
-.fb-field-wrapper .actions-wrapper a.js-clear, .fb-edit-field-wrapper .js-remove-option {
-    /*background-color: #e74c3c;
-    border: none*/
 }
 
 .fb-field-wrapper .subtemplate-wrapper {
@@ -311,10 +274,6 @@
     clear: both;
     font-weight: 700
 }
-
-/*.fb-edit-field-wrapper .js-add-option, .fb-edit-field-wrapper .js-remove-option {
-    padding: 3px 6px
-}*/
 
 .fb-edit-field-wrapper .fb-bottom-add {
     margin-top: 8px

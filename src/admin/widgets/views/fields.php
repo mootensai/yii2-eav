@@ -10,8 +10,8 @@ use yii\web\View;
 $path = FbAsset::register($this);
 ?>
 
-		<div class="form-builder fb-main">
-		</div>
+<div class="form-builder fb-main">
+</div>
 <?php
 $js_form_builder = <<<JS
 	$(function(){
@@ -37,7 +37,7 @@ $js_form_builder = <<<JS
 JS;
 
 $this->registerJs($js_form_builder, View::POS_READY, 'js_form_builder');
-if(file_exists(Yii::getAlias('@mirocow/eav').'/admin/assets/formbuilder/locales/'.Yii::$app->language.'.js')){
-		$this->registerJsFile($path->baseUrl.'/locales/'.Yii::$app->language.'.js', [View::POS_READY]);
+if (file_exists(Yii::getAlias('@mirocow/eav') . '/admin/assets/formbuilder/locales/' . Yii::$app->language . '.js')) {
+    $this->registerJsFile($path->baseUrl . '/locales/' . Yii::$app->language . '.js', [View::POS_READY]);
 }
 ?>

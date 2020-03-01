@@ -10,6 +10,7 @@ use Yii;
 use yii\base\DynamicModel as BaseEavModel;
 use yii\db\ActiveRecord;
 use yii\widgets\ActiveForm;
+use mirocow\eav\models\EavAttribute;
 
 /**
  * Class EavModel

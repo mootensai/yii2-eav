@@ -1,5 +1,5 @@
 {
-	"name": "mirocow/yii2-eav",
+	"name": "mootensai/yii2-eav",
 	"description": "EAV for Yii2",
 	"license": "MIT",
 	"keywords": [
@@ -36,7 +36,7 @@
 	},
 	"autoload": {
 		"psr-4": {
-			"mirocow\\eav\\": "./src"
+			"mootensai\\eav\\": "./src"
 		}
 	}
 }

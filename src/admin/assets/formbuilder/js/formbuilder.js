@@ -1069,7 +1069,7 @@
 
 						__p += '<div class="fb-edit-section-header"> ' + Formbuilder.lang('Field type:') + ' ' +
 								((__t = ( rf.get(Formbuilder.names.FIELD_TYPE) )) == null ? '' : Formbuilder.lang(__t)) +
-								', Attribure id: ' + rf.cid + '</div><div class="fb-common-wrapper"><div class="fb-label-description">' +
+								', Attribute id: ' + rf.cid + '</div><div class="fb-common-wrapper"><div class="fb-label-description">' +
 								((__t = ( Formbuilder.templates['edit/label_description']() )) == null ? '' : __t) +
 								'</div><div class="fb-common-checkboxes">';
 				}

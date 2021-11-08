@@ -11,8 +11,10 @@ use Yii;
  * @property integer $id
  * @property integer $entityId
  * @property integer $attributeId
+ * @property integer $valueId
  * @property string $value
  * @property integer $optionId
+ *
  * @property EavAttribute $attribute
  * @property Eav $entity
  * @property EavAttributeOption $option
@@ -28,14 +30,23 @@ class EavAttributeValue extends \yii\db\ActiveRecord
     }
 
     /**
+     * Auto increment function for value ID
+     *
+     * @return int
+     */
+    public static function getLastValueId($entityId){
+        return static::find(['entityId' => $entityId])->max('valueId');
+    }
+
+    /**
      * @inheritdoc
      */
     public function rules()
     {
         return [
             [['entityId', 'attributeId'], 'required'],
-            [['entityId', 'attributeId', 'optionId'], 'integer'],
-            [['value'], 'string', 'max' => 1023],
+            [['entityId', 'attributeId', 'valueId', 'optionId'], 'integer'],
+            [['value'], 'string', 'max' => 255],
         ];
     }
 
@@ -48,6 +59,7 @@ class EavAttributeValue extends \yii\db\ActiveRecord
             'id' => 'ID',
             'entityId' => Yii::t('eav', 'Entity ID'),
             'attributeId' => Yii::t('eav', 'Attribute ID'),
+            'valueId' => Yii::t('eav', 'Value ID'),
             'value' => Yii::t('eav', 'Value'),
             'optionId' => Yii::t('eav', 'Option ID'),
         ];

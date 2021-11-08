@@ -17,7 +17,7 @@ class EavAttributeValueSearch extends EavAttributeValue
     public function rules()
     {
         return [
-            [['id', 'entityId', 'attributeId', 'optionId'], 'integer'],
+            [['id', 'entityId', 'attributeId', 'valueId', 'optionId'], 'integer'],
             [['value'], 'safe'],
         ];
     }
@@ -35,6 +35,7 @@ class EavAttributeValueSearch extends EavAttributeValue
      * Creates data provider instance with search query applied
      *
      * @param array $params
+     *
      * @return ActiveDataProvider
      */
     public function search($params)
@@ -43,11 +44,9 @@ class EavAttributeValueSearch extends EavAttributeValue
 
         // add conditions that should always apply here
 
-        $dataProvider = new ActiveDataProvider(
-            [
-                'query' => $query,
-            ]
-        );
+        $dataProvider = new ActiveDataProvider([
+            'query' => $query,
+        ]);
 
         $this->load($params);
 
@@ -58,14 +57,13 @@ class EavAttributeValueSearch extends EavAttributeValue
         }
 
         // grid filtering conditions
-        $query->andFilterWhere(
-            [
-                'id' => $this->id,
-                'entityId' => $this->entityId,
-                'attributeId' => $this->attributeId,
-                'optionId' => $this->optionId,
-            ]
-        );
+        $query->andFilterWhere([
+            'id' => $this->id,
+            'entityId' => $this->entityId,
+            'attributeId' => $this->attributeId,
+            'valueId' => $this->valueId,
+            'optionId' => $this->optionId,
+        ]);
 
         $query->andFilterWhere(['like', 'value', $this->value]);
 
